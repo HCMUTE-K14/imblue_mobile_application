@@ -1,0 +1,36 @@
+dependencies: \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.m \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/node_modules/react-native/Libraries/Text/TextInput/RCTBaseTextInputView.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTView.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTComponent.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTPointerEvents.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/node_modules/react-native/Libraries/Text/TextInput/RCTBackedTextInputDelegate.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/node_modules/react-native/Libraries/Text/TextInput/RCTBackedTextInputViewProtocol.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAccessibilityManager.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTConvert.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAnimationType.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTEventDispatcher.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUIManager.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTRootView.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTViewManager.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/ios/build/Build/Products/Debug-iphonesimulator/include/React/UIView+React.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/node_modules/react-native/Libraries/Text/TextInput/RCTInputAccessoryView.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/node_modules/react-native/Libraries/Text/TextInput/RCTInputAccessoryViewContent.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/node_modules/react-native/Libraries/Text/RCTTextAttributes.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/node_modules/react-native/Libraries/Text/RCTTextTransform.h \
+  /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/node_modules/react-native/Libraries/Text/TextInput/RCTTextSelection.h

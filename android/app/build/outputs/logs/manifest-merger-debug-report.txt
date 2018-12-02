@@ -1,0 +1,153 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12
+MERGED from [com.facebook.react:react-native:0.57.7] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/react-native-0.57.7.aar/b2fbb5492305e2ff2a2a4451d6fe67a8/AndroidManifest.xml:2:1-15:12
+MERGED from [com.android.support:appcompat-v7:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/986bfc678af50858af773a1f8c8387a5/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/352215ba75fac4c49df6c6d7f0fa1ff4/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/6d881094adf5d5853a368721ce300742/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/ee25cf7c2a572e611daea9307970d71f/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/14705071923fe8af7d18dcde8869d0c1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/cd8e4c86db61236dfebbbe1d33d429fb/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/2ada970707eceb8a9b50e4c40bac5627/AndroidManifest.xml:17:1-22:12
+MERGED from [com.facebook.fresco:fresco:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/fresco-1.10.0.aar/fac5567164ae1417b7b9dfa1f408ee18/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-1.10.0.aar/508a84b2c903fda812b46b597bfefc1d/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:drawee:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/drawee-1.10.0.aar/f826d0f9206f24e3b00a174c85603bc0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.10.0.aar/c8b41d5f306fdbe1a8c81dd9fb8bf85f/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline-base:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.10.0.aar/fa06441b1e1b9de19e0d258b83910835/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.soloader:soloader:0.5.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/soloader-0.5.1.aar/a46a91b855a83122f8dd21efaa378c69/AndroidManifest.xml:2:1-13:12
+MERGED from [org.webkit:android-jsc:r174650] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/android-jsc-r174650.aar/229409de325a165e323ab5bb6c5cc4fd/AndroidManifest.xml:1:1-3:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/77e7565140725a56cc0c69e1aaee4556/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/132b9068962141ce3ef70fd6a400bf56/AndroidManifest.xml:17:1-22:12
+MERGED from [com.facebook.fresco:fbcore:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/fbcore-1.10.0.aar/89883f3706e32af3412984081711b7d7/AndroidManifest.xml:2:1-9:12
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/e9904ae9077c5700c539f1b8d645a147/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/332f81579c4d7ae373eee36daedb2b72/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12
+	package
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:2:5-23
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:4:5-67
+	android:name
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:4:22-64
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:5:5-77
+MERGED from [com.facebook.react:react-native:0.57.7] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/react-native-0.57.7.aar/b2fbb5492305e2ff2a2a4451d6fe67a8/AndroidManifest.xml:11:5-78
+MERGED from [com.facebook.react:react-native:0.57.7] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/react-native-0.57.7.aar/b2fbb5492305e2ff2a2a4451d6fe67a8/AndroidManifest.xml:11:5-78
+	android:name
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:5:22-75
+application
+ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:7:5-24:19
+MERGED from [com.facebook.react:react-native:0.57.7] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/react-native-0.57.7.aar/b2fbb5492305e2ff2a2a4451d6fe67a8/AndroidManifest.xml:13:5-20
+MERGED from [com.facebook.react:react-native:0.57.7] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/react-native-0.57.7.aar/b2fbb5492305e2ff2a2a4451d6fe67a8/AndroidManifest.xml:13:5-20
+MERGED from [com.facebook.soloader:soloader:0.5.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/soloader-0.5.1.aar/a46a91b855a83122f8dd21efaa378c69/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.soloader:soloader:0.5.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/soloader-0.5.1.aar/a46a91b855a83122f8dd21efaa378c69/AndroidManifest.xml:11:5-20
+MERGED from [org.webkit:android-jsc:r174650] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/android-jsc-r174650.aar/229409de325a165e323ab5bb6c5cc4fd/AndroidManifest.xml:2:3-17
+MERGED from [org.webkit:android-jsc:r174650] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/android-jsc-r174650.aar/229409de325a165e323ab5bb6c5cc4fd/AndroidManifest.xml:2:3-17
+	android:label
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:9:7-39
+	android:icon
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:10:7-41
+	android:allowBackup
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:11:7-34
+	android:theme
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:12:7-38
+	android:name
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:8:7-38
+activity#com.tlcn.MainActivity
+ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:13:7-22:18
+	android:label
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:15:9-41
+	android:windowSoftInputMode
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:17:9-51
+	android:configChanges
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:16:9-79
+	android:name
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:14:9-37
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:18:9-21:25
+action#android.intent.action.MAIN
+ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:19:13-65
+	android:name
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:19:21-62
+category#android.intent.category.LAUNCHER
+ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:20:13-73
+	android:name
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:20:23-70
+activity#com.facebook.react.devsupport.DevSettingsActivity
+ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:23:7-84
+	android:name
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:23:17-81
+uses-sdk
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+MERGED from [com.facebook.react:react-native:0.57.7] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/react-native-0.57.7.aar/b2fbb5492305e2ff2a2a4451d6fe67a8/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.react:react-native:0.57.7] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/react-native-0.57.7.aar/b2fbb5492305e2ff2a2a4451d6fe67a8/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/986bfc678af50858af773a1f8c8387a5/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/986bfc678af50858af773a1f8c8387a5/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/352215ba75fac4c49df6c6d7f0fa1ff4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/352215ba75fac4c49df6c6d7f0fa1ff4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/6d881094adf5d5853a368721ce300742/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/6d881094adf5d5853a368721ce300742/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/ee25cf7c2a572e611daea9307970d71f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/ee25cf7c2a572e611daea9307970d71f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/14705071923fe8af7d18dcde8869d0c1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/14705071923fe8af7d18dcde8869d0c1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/cd8e4c86db61236dfebbbe1d33d429fb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/cd8e4c86db61236dfebbbe1d33d429fb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/2ada970707eceb8a9b50e4c40bac5627/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/2ada970707eceb8a9b50e4c40bac5627/AndroidManifest.xml:20:5-44
+MERGED from [com.facebook.fresco:fresco:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/fresco-1.10.0.aar/fac5567164ae1417b7b9dfa1f408ee18/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fresco:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/fresco-1.10.0.aar/fac5567164ae1417b7b9dfa1f408ee18/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-1.10.0.aar/508a84b2c903fda812b46b597bfefc1d/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-1.10.0.aar/508a84b2c903fda812b46b597bfefc1d/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:drawee:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/drawee-1.10.0.aar/f826d0f9206f24e3b00a174c85603bc0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:drawee:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/drawee-1.10.0.aar/f826d0f9206f24e3b00a174c85603bc0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.10.0.aar/c8b41d5f306fdbe1a8c81dd9fb8bf85f/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.10.0.aar/c8b41d5f306fdbe1a8c81dd9fb8bf85f/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-base:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.10.0.aar/fa06441b1e1b9de19e0d258b83910835/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-base:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.10.0.aar/fa06441b1e1b9de19e0d258b83910835/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.soloader:soloader:0.5.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/soloader-0.5.1.aar/a46a91b855a83122f8dd21efaa378c69/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.soloader:soloader:0.5.1] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/soloader-0.5.1.aar/a46a91b855a83122f8dd21efaa378c69/AndroidManifest.xml:7:5-9:41
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/77e7565140725a56cc0c69e1aaee4556/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/77e7565140725a56cc0c69e1aaee4556/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/132b9068962141ce3ef70fd6a400bf56/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/132b9068962141ce3ef70fd6a400bf56/AndroidManifest.xml:20:5-44
+MERGED from [com.facebook.fresco:fbcore:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/fbcore-1.10.0.aar/89883f3706e32af3412984081711b7d7/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fbcore:1.10.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/fbcore-1.10.0.aar/89883f3706e32af3412984081711b7d7/AndroidManifest.xml:5:5-7:41
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/e9904ae9077c5700c539f1b8d645a147/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/e9904ae9077c5700c539f1b8d645a147/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/332f81579c4d7ae373eee36daedb2b72/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /Users/minhtuy/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/332f81579c4d7ae373eee36daedb2b72/AndroidManifest.xml:20:5-44
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+IMPLIED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12 reason: org.webkit.android_jsc has a targetSdkVersion < 4
+uses-permission#android.permission.READ_PHONE_STATE
+IMPLIED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12 reason: org.webkit.android_jsc has a targetSdkVersion < 4
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+IMPLIED from /Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/src/main/AndroidManifest.xml:1:1-26:12 reason: org.webkit.android_jsc requested WRITE_EXTERNAL_STORAGE
