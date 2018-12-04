@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sv/values-sv.xml",
+            "outputFile": "C:\\Users\\kunsubin\\Documents\\imblue_mobile_application\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sv\\values-sv.xml",
             "map": [
                 {
-                    "source": "/Users/minhtuy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/2ada970707eceb8a9b50e4c40bac5627/res/values-sv/values-sv.xml",
+                    "source": "C:\\Users\\kunsubin\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\46f37f5bf57603d1748c253878397a3b\\res\\values-sv\\values-sv.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/minhtuy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/986bfc678af50858af773a1f8c8387a5/res/values-sv/values-sv.xml",
+                    "source": "C:\\Users\\kunsubin\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\5448a2332060e2526e3176c7f4ca7da9\\res\\values-sv\\values-sv.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

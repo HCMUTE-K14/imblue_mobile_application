@@ -1,4 +1,4 @@
-#Sun Dec 02 20:54:54 ICT 2018
-base.0=/Users/minhtuy/Documents/VIHAT/QLQA/TLCN/android/app/build/intermediates/transforms/dexMerger/debug/0
+#Tue Dec 04 22:20:01 ICT 2018
+base.0=C\:\\Users\\kunsubin\\Documents\\imblue_mobile_application\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex
