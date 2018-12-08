@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, TextInput, Image, Dimensions, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard,Alert } from 'react-native';
+import { StyleSheet, View, TextInput, Image, Dimensions, TouchableOpacity, Text, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
 import usernameImg from '../../Images/username.png';
 import passwordImg from '../../Images/password.png';
@@ -14,44 +14,116 @@ export default class LoginScreen extends Component {
         super(props);
         this.state = {
             showPass: true,
-            UserName:'',
-            Password:''
+            UserName: '',
+            Password: '',
+            dataDemo: [],
+            resultLogin: '',
         };
         this.showPass = this.showPass.bind(this);
     }
     showPass() {
         this.setState({ showPass: !this.state.showPass })
     }
-    LoginOnClick = ()=>{
-        if(this.state.UserName.trim()=='' || this.state.Password.trim()==''){
-            if(this.state.UserName.trim()==''){
+    LoginOnClick = () => {
+        if (this.state.UserName.trim() == '' || this.state.Password.trim() == '') {
+            if (this.state.UserName.trim() == '') {
                 Alert.alert(
                     'Notification',
                     'Enter an username ',
                     [
-                      {text: 'Cancel',onPress: () => this.setState({UserName:'',Password:''}), style: 'cancel'},
-                      {text: 'OK', },
+                        { text: 'Cancel', onPress: () => this.setState({ UserName: '', Password: '' }), style: 'cancel' },
+                        { text: 'OK', },
                     ],
                     { cancelable: false }
-                  )
-            }else{
+                )
+            } else {
                 Alert.alert(
                     'Notification',
                     'Enter an password ',
                     [
-                        {text: 'Cancel', onPress: () => this.setState({UserName:'',Password:''}), style: 'cancel'},
-                      {text: 'OK'},
+                        { text: 'Cancel', onPress: () => this.setState({ UserName: '', Password: '' }), style: 'cancel' },
+                        { text: 'OK' },
                     ],
                     { cancelable: false }
-                  )
+                )
             }
-            
-        }else{
-            Actions.HomeScreen()
+
+        } else {
+            // Actions.HomeScreen()
+            var params = {
+                username: this.state.UserName,
+                password: this.state.Password,
+            }
+            console.log(JSON.stringify(params));
+            this.loginRequest(params);
         }
-       
+
     }
+    loginRequest = (data) => {
+        try {
+            fetch('http://192.168.1.172:8080/rest/auth/login', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then((response) => {
+
+                    console.log(JSON.parse(response._bodyInit));
+                    let str = JSON.parse(response._bodyInit);
+                    // this.setState({resultLogin:str})
+                    if (str.sucess == true) {
+                        Actions.HomeScreen({ accessToken: str.accessToken });
+                    } else {
+                        Alert.alert(
+                            'Thông báo',
+                            'Đăng nhập thất bại',
+                            [
+                                { text: 'Cancel', style: 'cancel' },
+                                { text: 'OK' },
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } catch (e) {
+            Alert.alert(
+                'Thông báo',
+                'Đăng nhập thất bại',
+                [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'OK' },
+                ],
+                { cancelable: false }
+            )
+        }
+    }
+    componentDidMount() {
+
+        return fetch('https://facebook.github.io/react-native/movies.json')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    // isLoading: false,
+                    dataDemo: responseJson.movies,
+                }, function () {
+
+                });
+
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     render() {
+
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={{ flex: 1 }}>
@@ -72,7 +144,7 @@ export default class LoginScreen extends Component {
                                 placeholderTextColor="white"
                                 underlineColorAndroid="transparent"
                                 autoCapitalize={'none'}
-                                onChangeText={(text) => this.setState({UserName:text})}
+                                onChangeText={(text) => this.setState({ UserName: text })}
                                 value={this.state.UserName}
                                 returnKeyType={'done'}
                                 autoCorrect={false}
@@ -87,7 +159,7 @@ export default class LoginScreen extends Component {
                                 underlineColorAndroid="transparent"
                                 autoCapitalize={'none'}
                                 returnKeyType={'done'}
-                                onChangeText={(text) => this.setState({Password:text})}
+                                onChangeText={(text) => this.setState({ Password: text })}
                                 value={this.state.Password}
                                 secureTextEntry={this.state.showPass}
                                 autoCorrect={false}
@@ -102,7 +174,7 @@ export default class LoginScreen extends Component {
                         </View>
                         <TouchableOpacity
                             style={{ backgroundColor: '#cdcdcd', margin: 30, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20 }}
-                            onPress={() =>this.LoginOnClick()}>
+                            onPress={() => this.LoginOnClick()}>
                             <Text>Login</Text>
                         </TouchableOpacity>
                     </View>

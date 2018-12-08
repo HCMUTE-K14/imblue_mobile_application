@@ -1,112 +1,77 @@
-// import React, { Component } from 'react';
-// import { Text, View, FlatList, TouchableOpacity } from 'react-native';
-// import SolveScreen from './Cast'
-// import OrdersScreen from './Orders'
-// import PreparationScreen from './PhaChe'
-
-// import { createBottomTabNavigator, createAppContainer ,createMaterialTopTabNavigator} from 'react-navigation';
-// const TabNavigator = createMaterialTopTabNavigator({
-//   Order: OrdersScreen,
-//   Preparation: PreparationScreen,
-//   Solve: SolveScreen,
-// });
-
-// export default createAppContainer(TabNavigator);
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 
 import React, { Component } from 'react';
 import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 
-
-const JSON_TEST = [
-    {
-        "id": "123", "TENBAN": "Bàn 1", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    },
-    {
-        "id": "456", "TENBAN": "Bàn 2", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    },
-    {
-        "id": "123", "TENBAN": "Bàn 1", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    },
-    {
-        "id": "456", "TENBAN": "Bàn 2", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    },
-    {
-        "id": "123", "TENBAN": "Bàn 1", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    },
-    {
-        "id": "456", "TENBAN": "Bàn 2", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    },
-    {
-        "id": "123", "TENBAN": "Bàn 1", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    },
-    {
-        "id": "456", "TENBAN": "Bàn 2", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    }
-    , {
-        "id": "123", "TENBAN": "Bàn 1", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    },
-    {
-        "id": "456", "TENBAN": "Bàn 2", "listMon": [{ "TenMon": "Mon1", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" },
-        { "TenMon": "Mon2", "SoTien": 1230, "SoLuong": 2, "TinhTrang": "vi du" }]
-    }
-]
+import OrderScreen from './OrderScreen'
+import PaymentScreen from './PaymentScreen'
+import PreparationScreen from './PreparationScreen'
+import AddFoodScreen from './AddFoodScreen'
+import { Actions } from 'react-native-router-flux';
+var jwtDecode = require('jwt-decode')
 
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isChooseTab: 0,
+            display: false,
         }
     }
-    renderRow2 = ({ item, index }) => {
-        return (
-            <View style={{ padding: 10, flexDirection: 'row', flex: 1 }}>
-                <Text style={{ flex: 3 }}>{item.TenMon}</Text>
-                <Text style={{ flex: 1 }}>{item.SoLuong}</Text>
-                <Text style={{ flex: 1 }}>{item.TinhTrang}</Text>
-            </View>
-        );
-    };
-    renderRow = ({ item, index }) => {
-        return (
-            <View style={{ padding: 5, margin: 5, borderRadius: 5, backgroundColor: '#125c5f', }}>
-                <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>{item.TENBAN}</Text>
-                <FlatList
-                    data={item.listMon}
-                    renderItem={this.renderRow2} />
 
-            </View>
-        );
-    };
+    renderScreen = () => {
+        var { isChooseTab } = this.state
+        if (isChooseTab == 0) {
+            return (
+                <OrderScreen accessToken={this.props.accessToken} />
+            )
+        }
+        if (isChooseTab == 1) {
+            return (
+                <PreparationScreen accessToken={this.props.accessToken} />
+            )
+        }
+        if (isChooseTab == 2) {
+            return (
+                <PaymentScreen accessToken={this.props.accessToken} />
+            )
+        }
+        if (isChooseTab == 3) {
+            return (
+                <AddFoodScreen accessToken={this.props.accessToken} />
+            )
+        }
+    }
     render() {
+        var decode = jwtDecode(this.props.accessToken)
         return (
-            <View >
-                <FlatList
-                    data={JSON_TEST}
-                    renderItem={this.renderRow} />
-                <View style={{ padding: 10, flexDirection: 'row', position: 'absolute', bottom: 0, backgroundColor: '#cdcdcd' }}>
-                    <TouchableOpacity style={{ flex: 1 }}>
-                        <Text style={{ textAlign: 'center' }}>Thêm Món</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flex: 1 }}>
-                        <Text style={{ textAlign: 'center' }}>Thực đơn</Text>
-                    </TouchableOpacity>
+            <View style={{ flex: 1 }} >
+                <View style={{ height: 40, flexDirection: 'row', backgroundColor: '#03A9F4', justifyContent: "center" , alignContent:'center',}}>
+                    <Text style={{ flex: 3, fontSize: 20, paddingTop:10 }}>{'Tên Nhân viên: ' + decode.displayName}</Text>
+                    <TouchableOpacity onPress={() => Actions.LoginScreen()} style={{ flex: 1, backgroundColor: '#cdcdcd', justifyContent: 'center', alignContent: 'center', paddingTop:10 }}>
+                        <Text style={{ flex: 1, textAlign:"center"}}>{'Đăng xuất'}</Text>
+                    </TouchableOpacity >
                 </View>
+                <View style={{ flex: 1, marginBottom: 40 }}>
+                    {this.renderScreen()}
+                </View>
+                <View style={{ padding: 10, flexDirection: 'row', position: 'absolute', bottom: 0, backgroundColor: '#fff' }}>
+                    <TouchableOpacity onPress={() => this.setState({ isChooseTab: 0 })} style={{ flex: 1 }}>
+                        <Text style={{ textAlign: 'center', color: this.state.isChooseTab == 0 ? 'red' : 'black' }}>Thêm Order</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.setState({ isChooseTab: 1 })} style={{ flex: 1 }}>
+                        <Text style={{ textAlign: 'center', color: this.state.isChooseTab == 1 ? 'red' : 'black' }}>Pha Chế</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.setState({ isChooseTab: 2 })} style={{ flex: 1 }}>
+                        <Text style={{ textAlign: 'center', color: this.state.isChooseTab == 2 ? 'red' : 'black' }}>Thanh Toán</Text>
+                    </TouchableOpacity>
+                    {
+                        decode.isAdmin == true ?
+                            <TouchableOpacity onPress={() => this.setState({ isChooseTab: 3 })} style={{ flex: 1 }}>
+                                <Text style={{ textAlign: 'center', color: this.state.isChooseTab == 3 ? 'red' : 'black' }}>Tạo Món</Text>
+                            </TouchableOpacity> : null
+                    }
+                </View>
+
             </View>
         );
     }
