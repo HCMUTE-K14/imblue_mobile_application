@@ -11,7 +11,7 @@ import { Modal, Text, TouchableHighlight, View, Alert, TouchableOpacity, FlatLis
 const DEVICE_WIDTH = Dimensions.get('window').width
 import ModalDropdown from 'react-native-modal-dropdown';
 import TDropDown from '../../Modal/TDropdown'
-
+import Constant from '../../config/constant'
 
 
 export default class App extends Component {
@@ -29,7 +29,7 @@ export default class App extends Component {
         var that = this;
 
         try {
-            fetch('http://192.168.1.172:8080/rest/orders', {
+            fetch(Constant.urlOrders, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -181,7 +181,7 @@ export default class App extends Component {
        var accessToken =this.props.accessToken;
        var that = this;
         try {
-            fetch('http://192.168.1.172:8080/rest/orders/changeStatus', {
+            fetch(Constant.urlPayment, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

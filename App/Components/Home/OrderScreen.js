@@ -11,7 +11,7 @@ import { Modal, Text, TouchableHighlight, View, Alert, TouchableOpacity, FlatLis
 const DEVICE_WIDTH = Dimensions.get('window').width
 import ModalDropdown from 'react-native-modal-dropdown';
 import TDropDown from '../../Modal/TDropdown'
-
+import Constant from '../../config/constant'
 const JSON_TABLE = [
     {
         "table_no": "Bàn 1"
@@ -54,9 +54,9 @@ export default class App extends Component {
             dropDownChecked: false,
             listFoodChooseData: [],
             ListOrders: [],
-            ListFoods:[],
-            statusChooseTable:false,
-            isShowListBeverages:false,
+            ListFoods: [],
+            statusChooseTable: false,
+            isShowListBeverages: false,
         }
     }
     _renderCountryCodeRow(rowData) {
@@ -87,8 +87,9 @@ export default class App extends Component {
     componentWillMount() {
         var accessToken = this.props.accessToken;
         var that = this;
+
         try {
-            fetch('http://192.168.1.172:8080/rest/beverages', {
+            fetch(Constant.urlBeverages, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -118,7 +119,7 @@ export default class App extends Component {
             )
         }
         try {
-            fetch('http://192.168.1.172:8080/rest/orders', {
+            fetch(Constant.urlOrders, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -147,7 +148,7 @@ export default class App extends Component {
             )
         }
         try {
-            fetch('http://192.168.1.172:8080/rest/beverages', {
+            fetch(Constant.urlBeverages, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
@@ -177,10 +178,10 @@ export default class App extends Component {
     }
     renderRow2 = ({ item, index }) => {
         return (
-            <View style={{ paddingTop: 5, paddingLeft:10, flexDirection: 'row', flex: 1 }}>
+            <View style={{ paddingTop: 5, paddingLeft: 10, flexDirection: 'row', flex: 1 }}>
                 <Text style={{ flex: 1.5 }}>{item.beverage.name}</Text>
                 <Text style={{ flex: 1 }}>{item.beverage.price}</Text>
-                <Text style={{ flex: 1, textAlign:'center' }}>{item.quantity}</Text>
+                <Text style={{ flex: 1, textAlign: 'center' }}>{item.quantity}</Text>
             </View>
         );
     };
@@ -193,20 +194,20 @@ export default class App extends Component {
             </View>
         );
     }
-    ClickTableFood = (item)=>{
-        this.setState({statusChooseTable:true,modalVisible:true, dropDownSelected:{table_no:item.table_no}})
+    ClickTableFood = (item) => {
+        this.setState({ statusChooseTable: true, modalVisible: true, dropDownSelected: { table_no: item.table_no } })
         // console.log(JSON.stringify(item))
     }
     renderRow = ({ item, index }) => {
         return (
-            <TouchableOpacity onPress={()=>this.ClickTableFood(item)}  style={{ padding: 5, margin: 5, borderRadius: 5, backgroundColor: '#66CCFF', }}>
+            <TouchableOpacity onPress={() => this.ClickTableFood(item)} style={{ padding: 5, margin: 5, borderRadius: 5, backgroundColor: '#66CCFF', }}>
                 <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>{item.table_no}</Text>
                 <FlatList
                     data={item.list_menu_item}
                     ListHeaderComponent={this.renderHeader}
                     renderItem={this.renderRow2} />
             </TouchableOpacity>
-            
+
         );
     };
     renderRowListFood = ({ item, index }) => {
@@ -237,6 +238,7 @@ export default class App extends Component {
             <View >
                 {this.state.ListOrders.length > 0 ?
                     <FlatList
+                        style={{ marginBottom: 40 }}
                         data={this.state.ListOrders}
                         renderItem={this.renderRow} />
                     : null}
@@ -245,7 +247,7 @@ export default class App extends Component {
                     <TouchableOpacity onPress={() => this.setModalVisible(true)} style={{ flex: 1 }}>
                         <Text style={{ textAlign: 'center' }}>Thêm Bàn</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress = {()=>this.setState({isShowListBeverages:true})} style={{ flex: 1 }}>
+                    <TouchableOpacity onPress={() => this.setState({ isShowListBeverages: true })} style={{ flex: 1 }}>
                         <Text style={{ textAlign: 'center' }}>Thực đơn</Text>
                     </TouchableOpacity>
                 </View>
@@ -272,7 +274,7 @@ export default class App extends Component {
                                 dropDownSelected: {
                                     table_no: value.table_no
                                 },
-                                statusChooseTable:true,
+                                statusChooseTable: true,
                             })}
                             dropdownStyle={{
                                 shadowColor: "rgba(0, 0, 0, 0.2)",
@@ -292,24 +294,56 @@ export default class App extends Component {
                                 title={this.state.dropDownSelected.table_no} />
                         </ModalDropdown>
 
-                        {
-                            this.state.statusChooseTable ?
-                                this.listFoodChoose()
-                                : null
-                        }
-                        {
-                            this.state.statusChooseTable && this.state.listFoodChooseData.length > 0 ?
-                                this.renderListFood()
-                                : null
-                        }
-                        <TouchableHighlight onPress={() => {
-                            this.setModalVisible(!this.state.modalVisible)
-                            this.setState({dropDownSelected: {
-                                table_no: 'Vui Lòng chọn bàn',
-                            }, statusChooseTable:false})
-                        }}>
-                            <Text style={{ color: '#3f2949', marginTop: 10 }}>Xong</Text>
-                        </TouchableHighlight>
+                        <View style={{ flex: 1 }}>
+                            {
+                                this.state.statusChooseTable ?
+                                    this.listFoodChoose()
+                                    : null
+                            }
+                            {
+                                this.state.statusChooseTable && this.state.listFoodChooseData.length > 0 ?
+                                    this.renderListFood()
+                                    : null
+                            }
+                        </View>
+                        <View style={{ flexDirection: 'row', height: 50, marginBottom: 10 }}>
+                            <TouchableOpacity
+                                style={{ flex: 1, backgroundColor: '#33FFFF', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, width: DEVICE_WIDTH / 2 }}
+                                onPress={() => {
+                                    this.setModalVisible(!this.state.modalVisible)
+                                    this.setState({
+                                        dropDownSelected: {
+                                            table_no: 'Vui Lòng chọn bàn',
+                                        }, statusChooseTable: false
+                                    })
+                                }}>
+                                <Text style={{ color: '#3f2949' }}>Thêm Orders</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={{ flex: 1, backgroundColor: 'red', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, width: DEVICE_WIDTH / 2 }}
+                                onPress={() => {
+                                    this.setModalVisible(!this.state.modalVisible)
+                                    this.setState({
+                                        dropDownSelected: {
+                                            table_no: 'Vui Lòng chọn bàn',
+                                        }, statusChooseTable: false
+                                    })
+                                }}>
+                                <Text style={{ color: '#3f2949' }}>Hủy</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {/* <TouchableOpacity
+                            style={{ backgroundColor: '#33FFFF', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, marginLeft: 30, marginRight: 30 }}
+                            onPress={() => {
+                                this.setModalVisible(!this.state.modalVisible)
+                                this.setState({
+                                    dropDownSelected: {
+                                        table_no: 'Vui Lòng chọn bàn',
+                                    }, statusChooseTable: false
+                                })
+                            }}>
+                            <Text style={{ color: '#3f2949' }}>Thêm Orders</Text>
+                        </TouchableOpacity> */}
                     </View>
                 </Modal>
 
@@ -328,13 +362,13 @@ export default class App extends Component {
                         backgroundColor: '#cdcdcd',
                         // padding: 100
                     }}>
-                        <FlatList data={this.state.ListFoods} renderItem={this.renderRowListBeverages} ListHeaderComponent ={this.renderHeaderBeverages} />
-                        <TouchableHighlight onPress={() => {
+                        <FlatList data={this.state.ListFoods} renderItem={this.renderRowListBeverages} ListHeaderComponent={this.renderHeaderBeverages} />
 
-                            this.setState({isShowListBeverages:false})
-                        }}>
-                            <Text style={{ color: '#3f2949', marginTop: 10 }}>Xong</Text>
-                        </TouchableHighlight>
+                        <TouchableOpacity
+                            style={{ backgroundColor: '#33FFFF', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, marginLeft: 30, marginRight: 30 }}
+                            onPress={() => this.setState({ isShowListBeverages: false })}>
+                            <Text style={{ color: '#3f2949' }}>Xong</Text>
+                        </TouchableOpacity>
                     </View>
                 </Modal>
             </View>
@@ -344,20 +378,20 @@ export default class App extends Component {
         return (
             <View style={{ padding: 10, flexDirection: 'row', flex: 1 }}>
                 <Text numberOfLines={1} style={{ flex: 1 }}>{'Tên Món'}</Text>
-                <Text numberOfLines={1}  style={{ flex: 1 }}>{'Giá'}</Text>
-                <Text numberOfLines={1}  style={{ flex: 1 }}>{'Đơn vị'}</Text>
-                <Text numberOfLines={1}  style={{ flex: 1 }}>{'Loại'}</Text>
+                <Text numberOfLines={1} style={{ flex: 1 }}>{'Giá'}</Text>
+                <Text numberOfLines={1} style={{ flex: 1 }}>{'Đơn vị'}</Text>
+                <Text numberOfLines={1} style={{ flex: 1 }}>{'Loại'}</Text>
             </View>
         );
     }
-    renderRowListBeverages = ({ item, index })=>{
+    renderRowListBeverages = ({ item, index }) => {
         // console.log(JSON.stringify(item))
-        return(
+        return (
             <View style={{ padding: 10, flexDirection: 'row', flex: 1 }}>
-                <Text numberOfLines={1}  style={{ flex: 1 }}>{item.name}</Text>
-                <Text numberOfLines={1}  style={{ flex: 1 }}>{item.price}</Text>
-                <Text numberOfLines={1}  style={{ flex: 1 }}>{item.unit}</Text>
-                <Text numberOfLines={1}  style={{ flex: 1 }}>{'Loại'}</Text>
+                <Text numberOfLines={1} style={{ flex: 1 }}>{item.name}</Text>
+                <Text numberOfLines={1} style={{ flex: 1 }}>{item.price}</Text>
+                <Text numberOfLines={1} style={{ flex: 1 }}>{item.unit}</Text>
+                <Text numberOfLines={1} style={{ flex: 1 }}>{'Loại'}</Text>
             </View>
         )
     }

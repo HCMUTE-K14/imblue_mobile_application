@@ -8,7 +8,7 @@ import eyeImg from '../../Images/eye_black.png';
 import logoImg from '../../Images/logo.png';
 import Background from '../../Images/wallpaper.png';
 import { Actions } from 'react-native-router-flux';
-
+import Constant from '../../config/constant'
 export default class LoginScreen extends Component {
     constructor(props) {
         super(props);
@@ -60,8 +60,9 @@ export default class LoginScreen extends Component {
 
     }
     loginRequest = (data) => {
+        
         try {
-            fetch('http://192.168.1.172:8080/rest/auth/login', {
+            fetch(Constant.urlLogin, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
