@@ -47,16 +47,31 @@ export default class App extends Component {
         super(props);
         this.state = {
             modalVisible: false, display: false,
-            FoodList: [],
             dropDownSelected: {
                 table_no: 'Vui Lòng chọn bàn',
             },
+            dropDownSelectedCategory: {
+                name: 'Vui Lòng chọn danh mục',
+                id: -1
+            },
+            dropDownSelectedFood: {
+                name: 'Vui Lòng chọn sản phẩm',
+                id: -1
+            },
             dropDownChecked: false,
+            dropDownCheckedCategory: false,
+            dropDownCheckedFood: false,
             listFoodChooseData: [],
             ListOrders: [],
             ListFoods: [],
+            categoriesFood: [],
             statusChooseTable: false,
             isShowListBeverages: false,
+            listFoodFilter: [],
+            statusChooseCategory: false,
+            statusChooseFood: false,
+            listFoodAddTemp: [],
+            clickAdd:false,
         }
     }
     _renderCountryCodeRow(rowData) {
@@ -73,6 +88,20 @@ export default class App extends Component {
             </View>
         );
     }
+    _renderCategoryRow(rowData) {
+
+        const { name } = rowData;
+        return (
+            <View style={{
+                justifyContent: 'center',
+                width: DEVICE_WIDTH,
+                height: 50,
+                paddingRight: 10, paddingLeft: 10
+            }}>
+                <Text numberOfLines={1} style={[{ fontSize: 16, color: '#2c3e50', }]}> {`${name}`}</Text>
+            </View>
+        );
+    }
     onDropdownWillHide = () => {
         this.setState({
             dropDownChecked: false
@@ -84,40 +113,32 @@ export default class App extends Component {
             dropDownChecked: true
         });
     }
+    onDropdownWillHideCategory = () => {
+        this.setState({
+            dropDownCheckedCategory: false
+        });
+    }
+
+    onDropdownWillShowCategory = () => {
+        this.setState({
+            dropDownCheckedCategory: true
+        });
+    }
+    onDropdownWillHideFood = () => {
+        this.setState({
+            dropDownCheckedCFood: false
+        });
+    }
+
+    onDropdownWillShowFood = () => {
+        this.setState({
+            dropDownCheckedFood: true
+        });
+    }
     componentWillMount() {
         var accessToken = this.props.accessToken;
         var that = this;
 
-        try {
-            fetch(Constant.urlBeverages, {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                },
-            })
-                .then((response) => {
-                    response.json().then(result => {
-                        // console.log(result);
-                        that.setState({ FoodList: result.result })
-                    });
-
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        } catch (e) {
-            Alert.alert(
-                'Notification',
-                'Login fail',
-                [
-                    { text: 'Cancel', style: 'cancel' },
-                    { text: 'OK' },
-                ],
-                { cancelable: false }
-            )
-        }
         try {
             fetch(Constant.urlOrders, {
                 method: 'GET',
@@ -147,34 +168,7 @@ export default class App extends Component {
                 { cancelable: false }
             )
         }
-        try {
-            fetch(Constant.urlBeverages, {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                },
-            })
-                .then((response) => {
-                    response.json().then(result => {
-                        that.setState({ ListFoods: result.result })
-                    });
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        } catch (e) {
-            Alert.alert(
-                'Notification',
-                'Login fail',
-                [
-                    { text: 'Cancel', style: 'cancel' },
-                    { text: 'OK' },
-                ],
-                { cancelable: false }
-            )
-        }
+
     }
     renderRow2 = ({ item, index }) => {
         return (
@@ -217,33 +211,225 @@ export default class App extends Component {
             </View>
         );
     };
+    renderRowListFoodTemp = ({ item, index }) => {
+        return (
+            <View style={{ padding: 5, margin: 5, borderRadius: 5, backgroundColor: '#125c5f', }}>
+                <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>123</Text>
+            </View>
+        );
+    };
+    getInfo = () => {
+        var accessToken = this.props.accessToken;
+        var that = this;
+        try {
+
+            fetch(Constant.urlCreateCategory, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
+
+            })
+                .then((response) => {
+                    this.setState({ TextInputNameCategory: '' })
+                    let str = JSON.parse(response._bodyInit);
+                    if (str.success == true) {
+                        this.setState({ categoriesFood: str.result })
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } catch (e) {
+            Alert.alert(
+                'Thông báo',
+                'Tạo danh mục thất bại',
+                [
+                    { text: 'OK' },
+                ],
+                { cancelable: false }
+            )
+        }
+        try {
+            fetch(Constant.urlBeverages, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
+            })
+                .then((response) => {
+                    response.json().then(result => {
+                        that.setState({ ListFoods: result.result })
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } catch (e) {
+            Alert.alert(
+                'Notification',
+                'Login fail',
+                [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'OK' },
+                ],
+                { cancelable: false }
+            )
+        }
+    }
     setModalVisible(visible) {
         this.setState({ modalVisible: visible });
+        if (visible) {
+            this.getInfo();
+        }
+    }
+    filteredCategory = (id) => {
+        var foods = [];
+        this.state.ListFoods.forEach(function (food) {
+            if (food.category.id == id) {
+                foods.push(food);
+            }
+        })
+        this.setState({ listFoodFilter: foods })
+    }
+    renderCategoryFood = () => {
+        return (
+            <View style={{ height: 50 }}>
+                <ModalDropdown style={[{ width: DEVICE_WIDTH, height: 50, }]}
+                    options={this.state.categoriesFood}
+                    renderRow={this._renderCategoryRow.bind(this)}
+                    onDropdownWillShow={this.onDropdownWillShowCategory}
+                    onDropdownWillHide={this.onDropdownWillHideCategory}
+                    onSelect={(idx, value) => {
+                        this.setState({
+                            dropDownSelectedCategory: {
+                                name: value.name,
+                                id: value.id
+                            },
+                            dropDownSelectedFood: {
+                                name: 'Vui Lòng chọn sản phẩm',
+                                id: -1
+                            },
+                            statusChooseCategory: true,
+                        }), this.filteredCategory(value.id)
+                    }}
+                    dropdownStyle={{
+                        shadowColor: "rgba(0, 0, 0, 0.2)",
+                        shadowOffset: {
+                            width: 0,
+                            height: 5
+                        },
+                        shadowRadius: 20,
+                        shadowOpacity: 1,
+                        // height: isTablet ? 60 : 50 * (optionsLocation.length > 3 ? 3 : optionsLocation.length),
+                        width: DEVICE_WIDTH,
+                        justifyContent: 'center',
+                        // alignItems: 'center',
+                    }}
+                >
+                    <TDropDown checked={this.state.dropDownChecked} textStyle={{ color: '#2c3e50', fontSize: 16, alignItems: 'center', }} style={[{ paddingLeft: 10, paddingRight: 10, alignItems: 'center', }]}
+                        title={this.state.dropDownSelectedCategory.name} />
+                </ModalDropdown>
+
+                <View>
+
+                </View>
+
+            </View>
+        )
     }
     renderListFood = () => {
         return (
             <FlatList data={this.state.listFoodChooseData} renderItem={this.renderRowListFood} />
         )
     }
-    listFoodChoose = () => {
+    renderListFoods = () => {
         return (
-            <View >
-                <Text>Loai Mon</Text>
-                <Text>Ten Mon</Text>
+            <View style={{ height: 50 }}>
+                <ModalDropdown style={[{ width: DEVICE_WIDTH, height: 50, }]}
+                    options={this.state.listFoodFilter}
+                    renderRow={this._renderCategoryRow.bind(this)}
+                    onDropdownWillShow={this.onDropdownWillShowFood}
+                    onDropdownWillHide={this.onDropdownWillHideFood}
+                    onSelect={(idx, value) => {
+                        this.setState({
+                            dropDownSelectedFood: {
+                                name: value.name,
+                                id: value.id
+                            },
+                            statusChooseFood: true,
+                        })
+                    }}
+                    dropdownStyle={{
+                        shadowColor: "rgba(0, 0, 0, 0.2)",
+                        shadowOffset: {
+                            width: 0,
+                            height: 5
+                        },
+                        shadowRadius: 20,
+                        shadowOpacity: 1,
+                        // height: isTablet ? 60 : 50 * (optionsLocation.length > 3 ? 3 : optionsLocation.length),
+                        width: DEVICE_WIDTH,
+                        justifyContent: 'center',
+                        // alignItems: 'center',
+                    }}
+                >
+                    <TDropDown checked={this.state.dropDownChecked} textStyle={{ color: '#2c3e50', fontSize: 16, alignItems: 'center', }} style={[{ paddingLeft: 10, paddingRight: 10, alignItems: 'center', }]}
+                        title={this.state.dropDownSelectedFood.name} />
+                </ModalDropdown>
+
             </View>
         )
     }
+    renderListFoodAddTemp = (listFoods) => {
+        return (
+            <View>
+                <FlatList data={listFoods}  renderItem={({item}) => <Text>{'item.key'}</Text>}/>
+            </View>
+        )
+    }
+    addFoodsList = () => {
+        let params = {
+            "quantity": 1,
+            "beverage": this.state.dropDownSelectedFood.id,
+            "nameFood": this.state.dropDownSelectedFood.name,
+            "category": this.state.dropDownSelectedCategory.id,
+            "nameCategory": this.state.dropDownSelectedCategory.name
+        }
+        let listFoods = this.state.listFoodAddTemp;
+        listFoods.push(params);
+        this.renderListFoodAddTemp(listFoods);
+        this.setState({
+            listFoodAddTemp: listFoods,
+            dropDownSelectedCategory: {
+                name: 'Vui Lòng chọn danh mục',
+                id: -1
+            },
+            dropDownSelectedFood: {
+                name: 'Vui Lòng chọn sản phẩm',
+                id: -1
+            },
+            statusChooseFood: false,
+            statusChooseCategory: false
+        })
+    }
     render() {
         return (
-            <View >
-                {this.state.ListOrders.length > 0 ?
-                    <FlatList
-                        style={{ marginBottom: 40 }}
-                        data={this.state.ListOrders}
-                        renderItem={this.renderRow} />
-                    : null}
+            <View style={{ flex: 1 }}>
+                <View style={{ flex: 9 }}>
+                    {this.state.ListOrders.length > 0 ?
+                        <FlatList
+                            style={{ marginBottom: 40 }}
+                            data={this.state.ListOrders}
+                            renderItem={this.renderRow} />
+                        : null}
 
-                <View style={{ padding: 10, flexDirection: 'row', position: 'absolute', bottom: 0, backgroundColor: '#cdcdcd' }}>
+                </View>
+                <View style={{ padding: 10, flexDirection: 'row', backgroundColor: '#cdcdcd', height: 40 }}>
                     <TouchableOpacity onPress={() => this.setModalVisible(true)} style={{ flex: 1 }}>
                         <Text style={{ textAlign: 'center' }}>Thêm Bàn</Text>
                     </TouchableOpacity>
@@ -297,15 +483,21 @@ export default class App extends Component {
                         <View style={{ flex: 1 }}>
                             {
                                 this.state.statusChooseTable ?
-                                    this.listFoodChoose()
+                                    this.renderCategoryFood()
                                     : null
                             }
                             {
-                                this.state.statusChooseTable && this.state.listFoodChooseData.length > 0 ?
-                                    this.renderListFood()
-                                    : null
+                                this.state.statusChooseCategory && this.state.listFoodFilter.length > 0 ?
+                                    this.renderListFoods()
+                                    : <Text>{'Không có sản phẩm cho danh mục này'}</Text>
                             }
+                            <TouchableOpacity
+                                style={{ backgroundColor: '#33FFFF', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, width: DEVICE_WIDTH / 2 }}
+                                onPress={() => {this.addFoodsList(), this.setState({clickAdd:true})}}>
+                                <Text style={{ color: '#3f2949' }}>Thêm</Text>
+                            </TouchableOpacity>
                         </View>
+
                         <View style={{ flexDirection: 'row', height: 50, marginBottom: 10 }}>
                             <TouchableOpacity
                                 style={{ flex: 1, backgroundColor: '#33FFFF', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, width: DEVICE_WIDTH / 2 }}
@@ -317,7 +509,7 @@ export default class App extends Component {
                                         }, statusChooseTable: false
                                     })
                                 }}>
-                                <Text style={{ color: '#3f2949' }}>Thêm Orders</Text>
+                                <Text style={{ color: '#3f2949' }}>Tạo Orders</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={{ flex: 1, backgroundColor: 'red', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, width: DEVICE_WIDTH / 2 }}
@@ -332,18 +524,6 @@ export default class App extends Component {
                                 <Text style={{ color: '#3f2949' }}>Hủy</Text>
                             </TouchableOpacity>
                         </View>
-                        {/* <TouchableOpacity
-                            style={{ backgroundColor: '#33FFFF', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, marginLeft: 30, marginRight: 30 }}
-                            onPress={() => {
-                                this.setModalVisible(!this.state.modalVisible)
-                                this.setState({
-                                    dropDownSelected: {
-                                        table_no: 'Vui Lòng chọn bàn',
-                                    }, statusChooseTable: false
-                                })
-                            }}>
-                            <Text style={{ color: '#3f2949' }}>Thêm Orders</Text>
-                        </TouchableOpacity> */}
                     </View>
                 </Modal>
 
