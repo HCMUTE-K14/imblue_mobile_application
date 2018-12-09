@@ -12,6 +12,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width
 import ModalDropdown from 'react-native-modal-dropdown';
 import TDropDown from '../../Modal/TDropdown'
 import Constant from '../../config/constant'
+const io = require('socket.io-client');
 const JSON_TABLE = [
     {
         "table_no": "Bàn 1"
@@ -46,77 +47,30 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalVisible: false, display: false,
-            FoodList: [],
-            dropDownSelected: {
-                table_no: 'Vui Lòng chọn bàn',
-            },
-            dropDownChecked: false,
-            listFoodChooseData: [],
             ListOrders: [],
-            ListFoods: [],
-            statusChooseTable: false,
-            isShowListBeverages: false,
+            OrdersChoose:[]
         }
+        this.ioClient = io.connect(Constant.urlSocket);
     }
-    _renderCountryCodeRow(rowData) {
+    componentDidMount() {
 
-        const { table_no } = rowData;
-        return (
-            <View style={{
-                justifyContent: 'center',
-                width: DEVICE_WIDTH,
-                height: 50,
-                paddingRight: 10, paddingLeft: 10
-            }}>
-                <Text numberOfLines={1} style={[{ fontSize: 16, color: '#2c3e50', }]}> {`${table_no}`}</Text>
-            </View>
-        );
-    }
-    onDropdownWillHide = () => {
-        this.setState({
-            dropDownChecked: false
-        });
-    }
+        // this.socket.on('connect', () => {
+        //   this.setState({
+        //     status: 'Connected'
+        //   });
+        // });
+        this.ioClient.connect();
 
-    onDropdownWillShow = () => {
-        this.setState({
-            dropDownChecked: true
+        this.ioClient.on('on-notify-change-order-event', (data) => {
+            if (data.method === 'NEED_RELOAD_ORDER') {
+                // this.getOrder();
+                console.log('123')
+            }
         });
     }
     componentWillMount() {
         var accessToken = this.props.accessToken;
         var that = this;
-        try {
-            fetch(Constant.urlBeverages, {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                },
-            })
-                .then((response) => {
-                    response.json().then(result => {
-                        // console.log(result);
-                        that.setState({ FoodList: result.result })
-                    });
-
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        } catch (e) {
-            Alert.alert(
-                'Notification',
-                'Login fail',
-                [
-                    { text: 'Cancel', style: 'cancel' },
-                    { text: 'OK' },
-                ],
-                { cancelable: false }
-            )
-        }
         try {
             fetch(Constant.urlOrders, {
                 method: 'GET',
@@ -128,7 +82,24 @@ export default class App extends Component {
             })
                 .then((response) => {
                     response.json().then(result => {
-                        that.setState({ ListOrders: result.result })
+                        var ordersProcessing=[];
+                        var ordersDONE=[];
+                        var orders= [];
+                        result.result.forEach(function (order){
+                            if(order.status =='DONE'){
+                                ordersDONE.push(order);
+                            }else{
+                                ordersProcessing.push(order);
+                            }
+                        })
+                        ordersProcessing.forEach(function (order){
+                            orders.push(order)
+                        })
+                        ordersDONE.forEach(function (order){
+                            orders.push(order)
+                        })
+                        that.setState({ ListOrders: orders })
+                        // that.setState({ ListOrders: result.result })
                     });
 
                 })
@@ -146,41 +117,19 @@ export default class App extends Component {
                 { cancelable: false }
             )
         }
-        try {
-            fetch(Constant.urlBeverages, {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                },
-            })
-                .then((response) => {
-                    response.json().then(result => {
-                        that.setState({ ListFoods: result.result })
-                    });
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        } catch (e) {
-            Alert.alert(
-                'Notification',
-                'Login fail',
-                [
-                    { text: 'Cancel', style: 'cancel' },
-                    { text: 'OK' },
-                ],
-                { cancelable: false }
-            )
-        }
+       
+    }
+    notifyReloadData = (ioClient) => {
+        ioClient.emit('on-crud-order-event', {
+            payload: 'abc'
+        });
     }
     renderRow2 = ({ item, index }) => {
         return (
-            <View style={{ padding: 10, flexDirection: 'row', flex: 1 }}>
+            <View style={{ paddingTop: 5, paddingLeft: 10, flexDirection: 'row', flex: 1 }}>
                 <Text style={{ flex: 1.5 }}>{item.beverage.name}</Text>
                 <Text style={{ flex: 1 }}>{item.beverage.price}</Text>
-                <Text style={{ flex: 1 }}>{item.quantity}</Text>
+                <Text style={{ flex: 1, textAlign: 'center' }}>{item.quantity}</Text>
             </View>
         );
     };
@@ -193,13 +142,66 @@ export default class App extends Component {
             </View>
         );
     }
+    UpdateOrder = (item)=>{
+        var accessToken =this.props.accessToken;
+       var that = this;
+        try {
+            fetch(Constant.urlPayment, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify({
+                    orderId: item.id,
+                    status: 'DONE'
+                }),
+            })
+                .then((response) => {
+                    response.json().then(result => {
+                        Alert.alert(
+                            'Thông báo',
+                            'Thanh Toán thành công',
+                            [
+                                { text: 'OK' , onPress: () => {
+                                    that.componentWillMount();
+                                }},
+                            ],
+                            { cancelable: false }
+                        )
+                        that.notifyReloadData(this.ioClient);
+                    });
+
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } catch (e) {
+            Alert.alert(
+                'Thông báo',
+                'Thanh Toán thất bại',
+                [
+                    { text: 'OK' },
+                ],
+                { cancelable: false }
+            )
+        }
+    }
     ClickTableFood = (item) => {
-        this.setState({ statusChooseTable: true, modalVisible: true, dropDownSelected: { table_no: item.table_no } })
-        // console.log(JSON.stringify(item))
+        Alert.alert(
+            'Thông báo',
+            'Bạn có chắc đơn hàng tạo xong',
+            [
+                { text: 'OK', onPress: ()=>this.UpdateOrder(item) },
+                { text: 'cancle',style:'cancel' },
+            ],
+            { cancelable: false }
+        )
     }
     renderRow = ({ item, index }) => {
         return (
-            <TouchableOpacity onPress={() => this.ClickTableFood(item)} style={{ padding: 5, margin: 5, borderRadius: 5, backgroundColor: '#66CCFF', }}>
+            <TouchableOpacity onPress={() => this.ClickTableFood(item)} style={{ padding: 5, margin: 5, borderRadius: 5,backgroundColor:item.status=='DONE'?'#00CC00': '#66CCFF', }}>
                 <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>{item.table_no}</Text>
                 <FlatList
                     data={item.list_menu_item}
@@ -209,29 +211,7 @@ export default class App extends Component {
 
         );
     };
-    renderRowListFood = ({ item, index }) => {
-        return (
-            <View style={{ padding: 5, margin: 5, borderRadius: 5, backgroundColor: '#125c5f', }}>
-                <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>{item.table_no}</Text>
-            </View>
-        );
-    };
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
-    }
-    renderListFood = () => {
-        return (
-            <FlatList data={this.state.listFoodChooseData} renderItem={this.renderRowListFood} />
-        )
-    }
-    listFoodChoose = () => {
-        return (
-            <View >
-                <Text>Loai Mon</Text>
-                <Text>Ten Mon</Text>
-            </View>
-        )
-    }
+
     render() {
         return (
             <View >
@@ -241,71 +221,6 @@ export default class App extends Component {
                         renderItem={this.renderRow} />
                     : null
                 }
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={this.state.modalVisible}
-                    onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
-                    }}>
-                    <View style={{
-                        flex: 1,
-                        // alignItems: 'center',
-                        // justifyContent:'center',
-                        backgroundColor: '#cdcdcd',
-                        // padding: 100
-                    }}>
-                        <ModalDropdown style={[{ width: DEVICE_WIDTH, height: 50, }]}
-                            options={JSON_TABLE}
-                            renderRow={this._renderCountryCodeRow.bind(this)}
-                            onDropdownWillShow={this.onDropdownWillShow}
-                            onDropdownWillHide={this.onDropdownWillHide}
-                            onSelect={(idx, value) => this.setState({
-                                dropDownSelected: {
-                                    table_no: value.table_no
-                                },
-                                statusChooseTable: true,
-                            })}
-                            dropdownStyle={{
-                                shadowColor: "rgba(0, 0, 0, 0.2)",
-                                shadowOffset: {
-                                    width: 0,
-                                    height: 5
-                                },
-                                shadowRadius: 20,
-                                shadowOpacity: 1,
-                                // height: isTablet ? 60 : 50 * (optionsLocation.length > 3 ? 3 : optionsLocation.length),
-                                width: DEVICE_WIDTH,
-                                justifyContent: 'center',
-                                // alignItems: 'center',
-                            }}
-                        >
-                            <TDropDown checked={this.state.dropDownChecked} textStyle={{ color: '#2c3e50', fontSize: 16, alignItems: 'center', }} style={[{ paddingLeft: 10, paddingRight: 10, alignItems: 'center', }]}
-                                title={this.state.dropDownSelected.table_no} />
-                        </ModalDropdown>
-
-                        {
-                            this.state.statusChooseTable ?
-                                this.listFoodChoose()
-                                : null
-                        }
-                        {
-                            this.state.statusChooseTable && this.state.listFoodChooseData.length > 0 ?
-                                this.renderListFood()
-                                : null
-                        }
-                        <TouchableHighlight onPress={() => {
-                            this.setModalVisible(!this.state.modalVisible)
-                            this.setState({
-                                dropDownSelected: {
-                                    table_no: 'Vui Lòng chọn bàn',
-                                }, statusChooseTable: false
-                            })
-                        }}>
-                            <Text style={{ color: '#3f2949', marginTop: 10 }}>Xong</Text>
-                        </TouchableHighlight>
-                    </View>
-                </Modal>
             </View>
         );
     }

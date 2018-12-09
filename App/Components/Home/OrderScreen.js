@@ -7,11 +7,19 @@
  */
 
 import React, { Component } from 'react';
-import { Modal, Text, TouchableHighlight, View, Alert, TouchableOpacity, FlatList, Dimensions } from 'react-native';
+import { Modal, Text, TouchableHighlight, View, Alert, TouchableOpacity, FlatList, Dimensions, TextInput, StyleSheet } from 'react-native';
 const DEVICE_WIDTH = Dimensions.get('window').width
 import ModalDropdown from 'react-native-modal-dropdown';
 import TDropDown from '../../Modal/TDropdown'
 import Constant from '../../config/constant'
+var jwtDecode = require('jwt-decode')
+const io = require('socket.io-client');
+
+
+
+
+
+
 const JSON_TABLE = [
     {
         "table_no": "Bàn 1"
@@ -71,8 +79,19 @@ export default class App extends Component {
             statusChooseCategory: false,
             statusChooseFood: false,
             listFoodAddTemp: [],
-            clickAdd:false,
+            clickAdd: false,
+            TextQuantity: '',
+            OrdersIdChoose: null,
+            OrderListItemChosse: []
         }
+        this.ioClient = io.connect(Constant.urlSocket);
+
+    }
+
+    notifyReloadData = (ioClient) => {
+        ioClient.emit('on-crud-order-event', {
+            payload: 'abc'
+        });
     }
     _renderCountryCodeRow(rowData) {
 
@@ -138,7 +157,34 @@ export default class App extends Component {
     componentWillMount() {
         var accessToken = this.props.accessToken;
         var that = this;
-
+        try {
+            fetch(Constant.urlBeverages, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
+            })
+                .then((response) => {
+                    response.json().then(result => {
+                        that.setState({ ListFoods: result.result })
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } catch (e) {
+            Alert.alert(
+                'Notification',
+                'Login fail',
+                [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'OK' },
+                ],
+                { cancelable: false }
+            )
+        }
         try {
             fetch(Constant.urlOrders, {
                 method: 'GET',
@@ -150,7 +196,23 @@ export default class App extends Component {
             })
                 .then((response) => {
                     response.json().then(result => {
-                        that.setState({ ListOrders: result.result })
+                        var ordersProcessing = [];
+                        var ordersDONE = [];
+                        var orders = [];
+                        result.result.forEach(function (order) {
+                            if (order.status == 'DONE') {
+                                ordersDONE.push(order);
+                            } else {
+                                ordersProcessing.push(order);
+                            }
+                        })
+                        ordersProcessing.forEach(function (order) {
+                            orders.push(order)
+                        })
+                        ordersDONE.forEach(function (order) {
+                            orders.push(order)
+                        })
+                        that.setState({ ListOrders: orders })
                     });
 
                 })
@@ -169,6 +231,85 @@ export default class App extends Component {
             )
         }
 
+    }
+    getOrder = () => {
+        var accessToken = this.props.accessToken;
+        var that = this;
+
+        try {
+            fetch(Constant.urlOrders, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
+            })
+                .then((response) => {
+                    response.json().then(result => {
+                        var ordersProcessing = [];
+                        var ordersDONE = [];
+                        var orders = [];
+                        result.result.forEach(function (order) {
+                            if (order.status == 'DONE') {
+                                ordersDONE.push(order);
+                            } else {
+                                ordersProcessing.push(order);
+                            }
+                        })
+                        ordersProcessing.forEach(function (order) {
+                            orders.push(order)
+                        })
+                        ordersDONE.forEach(function (order) {
+                            orders.push(order)
+                        })
+                        that.setState({ ListOrders: orders })
+                        // that.setState({ ListOrders: result.result })
+                    });
+
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } catch (e) {
+            Alert.alert(
+                'Notification',
+                'Login fail',
+                [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'OK' },
+                ],
+                { cancelable: false }
+            )
+        }
+        try {
+            fetch(Constant.urlBeverages, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
+            })
+                .then((response) => {
+                    response.json().then(result => {
+                        that.setState({ ListFoods: result.result })
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } catch (e) {
+            Alert.alert(
+                'Notification',
+                'Login fail',
+                [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'OK' },
+                ],
+                { cancelable: false }
+            )
+        }
     }
     renderRow2 = ({ item, index }) => {
         return (
@@ -189,19 +330,19 @@ export default class App extends Component {
         );
     }
     ClickTableFood = (item) => {
-        this.setState({ statusChooseTable: true, modalVisible: true, dropDownSelected: { table_no: item.table_no } })
+        this.setState({ statusChooseTable: true, modalVisible: true, dropDownSelected: { table_no: item.table_no }, OrdersIdChoose: item.id, OrderListItemChosse: item.list_menu_item })
+        this.getInfo()
         // console.log(JSON.stringify(item))
     }
     renderRow = ({ item, index }) => {
         return (
-            <TouchableOpacity onPress={() => this.ClickTableFood(item)} style={{ padding: 5, margin: 5, borderRadius: 5, backgroundColor: '#66CCFF', }}>
+            <TouchableOpacity onPress={() => this.ClickTableFood(item)} style={{ padding: 5, margin: 5, borderRadius: 5, backgroundColor: item.status == 'DONE' ? '#00CC00' : '#66CCFF', }}>
                 <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>{item.table_no}</Text>
                 <FlatList
                     data={item.list_menu_item}
                     ListHeaderComponent={this.renderHeader}
                     renderItem={this.renderRow2} />
             </TouchableOpacity>
-
         );
     };
     renderRowListFood = ({ item, index }) => {
@@ -214,7 +355,19 @@ export default class App extends Component {
     renderRowListFoodTemp = ({ item, index }) => {
         return (
             <View style={{ padding: 5, margin: 5, borderRadius: 5, backgroundColor: '#125c5f', }}>
-                <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>123</Text>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600', flex: 1, textAlign: 'left', paddingLeft: 10 }}>{'Tên'}</Text>
+                    <Text style={{ fontSize: 16, color: '#fff', flex: 1, textAlign: 'left', paddingLeft: 10 }}>{item.nameFood}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600', flex: 1, textAlign: 'left', paddingLeft: 10 }}>{'Số lượng'}</Text>
+                    <Text style={{ fontSize: 16, color: '#fff', flex: 1, textAlign: 'left', paddingLeft: 10 }}>{item.quantity}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600', flex: 1, textAlign: 'left', paddingLeft: 10 }}>{'Tên danh mục'}</Text>
+                    <Text style={{ fontSize: 16, color: '#fff', flex: 1, textAlign: 'left', paddingLeft: 10 }}>{item.nameCategory}</Text>
+                </View>
             </View>
         );
     };
@@ -247,34 +400,6 @@ export default class App extends Component {
                 'Thông báo',
                 'Tạo danh mục thất bại',
                 [
-                    { text: 'OK' },
-                ],
-                { cancelable: false }
-            )
-        }
-        try {
-            fetch(Constant.urlBeverages, {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + accessToken
-                },
-            })
-                .then((response) => {
-                    response.json().then(result => {
-                        that.setState({ ListFoods: result.result })
-                    });
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        } catch (e) {
-            Alert.alert(
-                'Notification',
-                'Login fail',
-                [
-                    { text: 'Cancel', style: 'cancel' },
                     { text: 'OK' },
                 ],
                 { cancelable: false }
@@ -325,7 +450,7 @@ export default class App extends Component {
                         },
                         shadowRadius: 20,
                         shadowOpacity: 1,
-                        // height: isTablet ? 60 : 50 * (optionsLocation.length > 3 ? 3 : optionsLocation.length),
+                        height: 50 * (this.state.categoriesFood.length > 6 ? 6 : this.state.categoriesFood.length),
                         width: DEVICE_WIDTH,
                         justifyContent: 'center',
                         // alignItems: 'center',
@@ -342,14 +467,9 @@ export default class App extends Component {
             </View>
         )
     }
-    renderListFood = () => {
-        return (
-            <FlatList data={this.state.listFoodChooseData} renderItem={this.renderRowListFood} />
-        )
-    }
     renderListFoods = () => {
         return (
-            <View style={{ height: 50 }}>
+            <View style={{ height: 100 }}>
                 <ModalDropdown style={[{ width: DEVICE_WIDTH, height: 50, }]}
                     options={this.state.listFoodFilter}
                     renderRow={this._renderCategoryRow.bind(this)}
@@ -372,7 +492,7 @@ export default class App extends Component {
                         },
                         shadowRadius: 20,
                         shadowOpacity: 1,
-                        // height: isTablet ? 60 : 50 * (optionsLocation.length > 3 ? 3 : optionsLocation.length),
+                        height: 50 * (this.state.listFoodFilter.length > 6 ? 6 : this.state.listFoodFilter.length),
                         width: DEVICE_WIDTH,
                         justifyContent: 'center',
                         // alignItems: 'center',
@@ -381,41 +501,174 @@ export default class App extends Component {
                     <TDropDown checked={this.state.dropDownChecked} textStyle={{ color: '#2c3e50', fontSize: 16, alignItems: 'center', }} style={[{ paddingLeft: 10, paddingRight: 10, alignItems: 'center', }]}
                         title={this.state.dropDownSelectedFood.name} />
                 </ModalDropdown>
-
-            </View>
-        )
-    }
-    renderListFoodAddTemp = (listFoods) => {
-        return (
-            <View>
-                <FlatList data={listFoods}  renderItem={({item}) => <Text>{'item.key'}</Text>}/>
+                <TextInput
+                    autoCorrect={false}
+                    onChangeText={(text) => this.setState({ TextQuantity: text })}
+                    value={this.state.TextQuantity}
+                    placeholder={'Số Lượng'}
+                    style={styles.inputStyle}
+                />
             </View>
         )
     }
     addFoodsList = () => {
-        let params = {
-            "quantity": 1,
-            "beverage": this.state.dropDownSelectedFood.id,
-            "nameFood": this.state.dropDownSelectedFood.name,
-            "category": this.state.dropDownSelectedCategory.id,
-            "nameCategory": this.state.dropDownSelectedCategory.name
+        if (this.state.TextQuantity.trim() != '') {
+            let params = {
+                "quantity": this.state.TextQuantity,
+                "beverage": this.state.dropDownSelectedFood.id,
+                "nameFood": this.state.dropDownSelectedFood.name,
+                "price": this.state.dropDownSelectedFood.price,
+                "category": this.state.dropDownSelectedCategory.id,
+                "nameCategory": this.state.dropDownSelectedCategory.name
+            }
+            let listFoods = []
+            this.state.listFoodAddTemp.forEach(function (food) {
+                listFoods.push(food)
+            })
+            listFoods.push(params);
+            this.setState({
+                listFoodAddTemp: listFoods,
+                dropDownSelectedCategory: {
+                    name: 'Vui Lòng chọn danh mục',
+                    id: -1
+                },
+                dropDownSelectedFood: {
+                    name: 'Vui Lòng chọn sản phẩm',
+                    id: -1
+                },
+                statusChooseFood: false,
+                statusChooseCategory: false,
+                TextQuantity: ''
+            })
+        } else {
+            Alert.alert(
+                'Thông báo',
+                'Bạn vui lòng nhập đầy đủ thông tin',
+                [
+                    { text: 'OK' },
+                ],
+                { cancelable: false }
+            )
         }
-        let listFoods = this.state.listFoodAddTemp;
-        listFoods.push(params);
-        this.renderListFoodAddTemp(listFoods);
-        this.setState({
-            listFoodAddTemp: listFoods,
-            dropDownSelectedCategory: {
-                name: 'Vui Lòng chọn danh mục',
-                id: -1
-            },
-            dropDownSelectedFood: {
-                name: 'Vui Lòng chọn sản phẩm',
-                id: -1
-            },
-            statusChooseFood: false,
-            statusChooseCategory: false
+
+    }
+    componentDidMount() {
+
+        // this.socket.on('connect', () => {
+        //   this.setState({
+        //     status: 'Connected'
+        //   });
+        // });
+        this.ioClient.connect();
+
+        this.ioClient.on('on-notify-change-order-event', (data) => {
+            if (data.method === 'NEED_RELOAD_ORDER') {
+                this.getOrder();
+            }
+        });
+    }
+
+    CreateOrdersClick = () => {
+        var decode = jwtDecode(this.props.accessToken);
+        var that = this;
+        let listItems = [];
+        this.state.listFoodAddTemp.forEach(function (list) {
+            let params = {
+                quantity: parseInt(list.quantity),
+                beverage: list.beverage
+            }
+            listItems.push(params)
         })
+        let params = {
+            table_no: this.state.dropDownSelected.table_no,
+            user_created: decode.userId,
+            list_menu_item: listItems,
+            status: "PROCESSING",
+        }
+        // OrderListItemChosse
+        // let httpMethod = 'POST';
+        let orderUrl = Constant.urlOrders;
+        let httpMethod = 'POST'
+        if (this.state.OrdersIdChoose) {
+            params.id = this.state.OrdersIdChoose;
+            // params.list_menu_item.push()
+            this.state.OrderListItemChosse.forEach(function (item) {
+                params.list_menu_item.push({
+                    quantity: item.quantity,
+                    beverage: item.beverage.id
+                });
+            })
+            orderUrl += '/' + this.state.OrdersIdChoose;
+            httpMethod = 'PATCH'
+        }
+
+        try {
+            fetch(orderUrl, {
+                method: httpMethod,
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.props.accessToken
+                },
+                body: JSON.stringify(params),
+            })
+                .then((response) => {
+                    this.setState({ TextInputNameCategory: '' })
+                    let str = JSON.parse(response._bodyInit);
+                    that.getOrder();
+                    if (str.success == true) {
+                        that.setState({
+                            listFoodAddTemp: [],
+                            dropDownSelected: {
+                                table_no: 'Vui Lòng chọn bàn',
+                            },
+                            dropDownSelectedCategory: {
+                                name: 'Vui Lòng chọn danh mục',
+                                id: -1
+                            },
+                            dropDownSelectedFood: {
+                                name: 'Vui Lòng chọn sản phẩm',
+                                id: -1
+                            },
+                            statusChooseFood: false,
+                            statusChooseCategory: false,
+                            TextQuantity: '',
+
+                        })
+                        Alert.alert(
+                            'Thông báo',
+                            'Tạo Món Order thành công',
+                            [
+                                { text: 'OK' },
+                            ],
+                            { cancelable: false }
+                        )
+                        that.notifyReloadData(this.ioClient);
+                    } else {
+                        Alert.alert(
+                            'Thông báo',
+                            'Tạo Món Order thất bại',
+                            [
+                                { text: 'OK' },
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        } catch (e) {
+            Alert.alert(
+                'Thông báo',
+                'Tạo Món Order thất bại',
+                [
+                    { text: 'OK' },
+                ],
+                { cancelable: false }
+            )
+        }
     }
     render() {
         return (
@@ -470,7 +723,7 @@ export default class App extends Component {
                                 },
                                 shadowRadius: 20,
                                 shadowOpacity: 1,
-                                // height: isTablet ? 60 : 50 * (optionsLocation.length > 3 ? 3 : optionsLocation.length),
+                                height: 50 * (JSON_TABLE.length > 6 ? 6 : JSON_TABLE.length),
                                 width: DEVICE_WIDTH,
                                 justifyContent: 'center',
                                 // alignItems: 'center',
@@ -489,26 +742,25 @@ export default class App extends Component {
                             {
                                 this.state.statusChooseCategory && this.state.listFoodFilter.length > 0 ?
                                     this.renderListFoods()
-                                    : <Text>{'Không có sản phẩm cho danh mục này'}</Text>
+                                    : null
                             }
-                            <TouchableOpacity
-                                style={{ backgroundColor: '#33FFFF', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, width: DEVICE_WIDTH / 2 }}
-                                onPress={() => {this.addFoodsList(), this.setState({clickAdd:true})}}>
-                                <Text style={{ color: '#3f2949' }}>Thêm</Text>
-                            </TouchableOpacity>
+                            {this.state.statusChooseFood ?
+                                <TouchableOpacity
+                                    style={{ backgroundColor: '#33FFFF', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, width: DEVICE_WIDTH / 2 }}
+                                    onPress={() => this.addFoodsList()}>
+                                    <Text style={{ color: '#3f2949' }}>Thêm</Text>
+                                </TouchableOpacity> : null
+                            }
+
+                            <FlatList data={this.state.listFoodAddTemp} renderItem={this.renderRowListFoodTemp} />
+
                         </View>
 
                         <View style={{ flexDirection: 'row', height: 50, marginBottom: 10 }}>
                             <TouchableOpacity
-                                style={{ flex: 1, backgroundColor: '#33FFFF', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, width: DEVICE_WIDTH / 2 }}
-                                onPress={() => {
-                                    this.setModalVisible(!this.state.modalVisible)
-                                    this.setState({
-                                        dropDownSelected: {
-                                            table_no: 'Vui Lòng chọn bàn',
-                                        }, statusChooseTable: false
-                                    })
-                                }}>
+                                style={{ flex: 1, backgroundColor: this.state.listFoodAddTemp.length > 0 ? '#33FFFF' : '#C0C0C0', margin: 10, justifyContent: "center", alignItems: "center", height: 45, borderRadius: 20, width: DEVICE_WIDTH / 2 }}
+                                disabled={this.state.listFoodAddTemp.length > 0 ? false : true}
+                                onPress={() => this.CreateOrdersClick()}>
                                 <Text style={{ color: '#3f2949' }}>Tạo Orders</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
@@ -576,4 +828,17 @@ export default class App extends Component {
         )
     }
 }
+const styles = StyleSheet.create({
+    inputStyle: {
+        color: '#333',
+        fontSize: 16,
+        lineHeight: 23,
+        height: 40,
+        borderColor: '#333',
+        borderWidth: 0.5,
+        fontFamily: 'System',
+        margin: 10,
+        borderRadius: 5
+    }
 
+})
